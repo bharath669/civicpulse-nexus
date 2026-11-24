@@ -1,0 +1,32 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: grievance-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/civic_grievance_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Kolkata
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:Root123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+civic:
+  citizen-service:
+    base-url: http://localhost:8081
+  escalation:
+    check-interval-ms: 60000
+    extension-hours: 24
+    max-level: 3

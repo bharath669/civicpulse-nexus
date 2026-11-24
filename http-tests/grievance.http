@@ -1,0 +1,46 @@
+@g = http://localhost:8082
+### Register WATER_SUPPLY grievance (citizenId must exist)
+POST {{g}}/api/grievances
+Content-Type: application/json
+
+{
+ "citizenId":1,
+ "category":"WATER_SUPPLY",
+ "severity":"HIGH",
+ "title":"No water supply for three days",
+ "description":"No water supply for three days in Sector 5, Ward 12. Tanker service has not arrived.",
+ "location":"Sector 5"
+}
+###
+GET {{g}}/api/grievances
+###
+POST {{g}}/api/grievances/1/assign
+Content-Type: application/json
+
+{"officerName":"S. Prakash (AE)","remarks":"Inspect pipeline"}
+###
+PATCH {{g}}/api/grievances/1/status
+Content-Type: application/json
+
+{"status":"IN_PROGRESS","remarks":"Work started"}
+###
+POST {{g}}/api/grievances/1/simulate-breach
+###
+POST {{g}}/api/grievances/1/escalate
+Content-Type: application/json
+
+{"reason":"Citizen followed up"}
+###
+PATCH {{g}}/api/grievances/1/status
+Content-Type: application/json
+
+{"status":"RESOLVED","resolutionNotes":"Pipeline leak repaired and water supply restored"}
+###
+PATCH {{g}}/api/grievances/1/status
+Content-Type: application/json
+
+{"status":"CLOSED","remarks":"Citizen confirmed"}
+###
+GET {{g}}/api/grievances/1/history
+###
+GET {{g}}/api/dashboard/summary

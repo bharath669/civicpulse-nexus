@@ -1,0 +1,24 @@
+@c = http://localhost:8081
+### Valid citizen
+POST {{c}}/api/citizens
+Content-Type: application/json
+
+{
+  "fullName":"Ramesh Kumar",
+  "email":"ramesh@example.com",
+  "phone":"9876543210",
+  "aadhaarNumber":"123456789012",
+  "gender":"MALE",
+  "dateOfBirth":"1995-04-12",
+  "wardNumber":12,
+  "address":"Sector 5, Coimbatore"
+}
+###
+GET {{c}}/api/citizens
+###
+GET {{c}}/api/citizens/count
+### Invalid values should return HTTP 400 with fieldErrors
+POST {{c}}/api/citizens
+Content-Type: application/json
+
+{"fullName":"A","email":"wrong","phone":"12345","aadhaarNumber":"1234","gender":"MALE","dateOfBirth":"2030-01-01","wardNumber":500,"address":""}
